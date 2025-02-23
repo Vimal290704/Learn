@@ -1,0 +1,224 @@
+users[icon: user, color: blue] {
+  id string pk
+  Name string
+  email string
+  password string
+  phone string
+  AvtarId string
+  Role enum('Student', 'Teacher', 'Admin')
+  gender string
+  SchoolId string
+  SignAccessToken string
+  SignRefreshToken string
+}
+
+Avtar[icon: users] {
+  AvtarId string pk
+  ImgUrl string
+}
+
+School[icon: school, color: green] {
+  schoolId string pk
+  type string
+  BoardCode string
+  RegNo string
+  foundedYear date
+  email string
+  phone string
+  address object
+  AcademicYear string
+  Standard array[]    // List of grade levels
+  Plan object
+  status object
+  ActiveUser object
+  logo url
+  timestamp date
+}
+
+Student[icon: pen-tool, color: orange] {
+  Id string pk
+  Class_id string
+  Roll_no number
+  PersonalInfo PersonalInfo
+  Attendance Attendance
+  ActivityTracker Activity
+}
+
+PersonalInfo[icon: info, color: purple] {
+  StudentId string pk
+  SchoolIdCard object
+  ParentsDetail ParentsDetail
+  Height string
+  Weight string
+  BloodGroup string
+}
+
+Attendance[icon: pencil, color: red] {
+  UserId string pk    // Represents Student.Id or Teacher.Id
+  Daily boolean
+  Weekly number
+  Monthly number
+  Yearly number
+}
+
+Activity[icon: activity, color: yellow] {
+  StudentId string pk
+  QuizStatus boolean
+  Points boolean
+  Streak number
+}
+
+Teacher[icon: worker, color: gray] {
+  Id string pk
+  JoiningDate date
+  EmploymentType enum('Fulltime', 'Parttime', 'Contract')
+  ExperienceYear number
+  IsActive boolean
+  Subjects string[]         // List of subject codes or names
+  GradesAssigned string[]   // List of grades assigned
+  IsClassteacher boolean
+  AssignedClassesID string | null   // Class ID if applicable
+  Attendance Attendance
+  WeeklySchedule object
+  TeacherPerformance TeacherPerformance
+}
+
+TeacherPerformance[icon: gcp-performance-dashboard, color: green] {
+  TeacherId string pk
+  StudentPassed number
+  ClassAvgScore number
+  ParentsFeedback Feedback
+  Achievements Achievements[]
+}
+
+Achievements[icon: award, color: blue] {
+  TeacherId string pk
+  Title string
+  AchievementDate date
+  Description string
+}
+
+Feedback[icon: message-circle, color: red] {
+  TeacherId string pk
+  AvgRating number
+  Feedbacks feedback[]    // List of feedback objects
+}
+
+Form[icon: form, color: orange] {
+  FormId string pk
+  FormType enum('Lecture Feedback', 'Student Feedback', 'Parent Feedback')
+  FilledBy enum('Student', 'Teacher', 'Parent')
+  StudentId string
+  TeacherId string
+  SubmissionDate date
+}
+
+LectFeedbackForm[icon: message-square, color: blue] {
+  FormId string
+  LectureId string
+  Rating LectRating
+}
+
+LectRating[icon: message-circle, color: yellow] {
+  FormId string pk
+  AverageRating LectRatingType
+  RatingByStudent LectRatingType[]
+}
+
+LectRatingType[icon: message-circle, color: red] {
+  LectRatingId string pk
+  ContentClarity number
+  EngagementLevel number
+  LecturePace number
+  ContentRelevance number
+  Comment? string
+}
+
+StudentForm[icon: form, color: green] {
+  FormId string
+  Rating StudRating
+}
+
+StudRating[icon: messenger, color: red] {
+  FormId string pk
+  AverageRating StudRatingtype
+  RatingByStudent StudRatingtype[]
+}
+
+StudRatingtype[icon: message-circle, color: purple] {
+  StudRatingId string pk
+  CommunicationSkills number
+  Approachability number
+  TeachingEffectiveness number
+  Comment? string
+}
+
+ParentsForm[icon: message-circle, color: red] {
+  FormId string
+  Rating ParentRating
+}
+
+ParentRating[icon: messenger, color: blue] {
+  FormId string pk
+  AverageRating ParentRatingType
+  ParentRating ParentRatingType[]
+}
+
+ParentRatingType[icon: message-circle, color: purple] {
+  ParentRatingId string pk
+  ChildImprovement number
+  TeachersGuidance number
+  CommunicationParents number
+  ProfessionalismBehavior number
+  MotivationToStudents number
+  comments? string
+}
+
+users.AvtarId  - Avtar.AvtarId
+users.SchoolId           - School.schoolId
+
+Student.Id               - users.id
+Student.PersonalInfo     - PersonalInfo.StudentId
+Student.Attendance       - Attendance.UserId     // Maps Student attendance via Student.Id
+Student.ActivityTracker  - Activity.StudentId
+
+PersonalInfo.StudentId   - Student.Id
+Activity.StudentId       - Student.Id
+
+Teacher.Id               - users.id
+Teacher.Attendance       - Attendance.UserId     // Maps Teacher attendance via Teacher.Id
+Teacher.TeacherPerformance - TeacherPerformance.TeacherId
+
+TeacherPerformance.TeacherId      - Teacher.Id
+TeacherPerformance.ParentsFeedback - Feedback.TeacherId
+TeacherPerformance.Achievements    - Achievements.TeacherId
+
+Achievements.TeacherId   - Teacher.Id
+Feedback.TeacherId       - Teacher.Id
+
+Form.StudentId           - Student.Id
+Form.TeacherId           - Teacher.Id
+
+LectFeedbackForm.FormId  - Form.FormId
+LectFeedbackForm.Rating  - LectRating.FormId
+
+LectRating.FormId        - LectFeedbackForm.FormId
+LectRating.RatingByStudent - LectRatingType.LectRatingId
+
+LectRatingType.LectRatingId - LectRating.FormId
+
+StudentForm.FormId       - Form.FormId
+StudentForm.Rating       - StudRating.FormId
+
+StudRating.FormId        - StudentForm.FormId
+StudRating.RatingByStudent - StudRatingtype.StudRatingId
+
+StudRatingtype.StudRatingId - StudRating.FormId
+
+ParentsForm.FormId       - Form.FormId
+ParentsForm.Rating       - ParentRating.FormId
+
+ParentRating.FormId      - ParentsForm.FormId
+ParentRating.ParentRating - ParentRatingType.ParentRatingId
+
+ParentRatingType.ParentRatingId - ParentRating.FormId
