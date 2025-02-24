@@ -72,7 +72,7 @@ Attendance[icon: pencil, color: red] {
 Activity[icon: activity, color: yellow] {
   StudentId string pk      // References Student.Id
   QuizStatus boolean
-  Points boolean
+  Points number
   Streak number
 }
 
@@ -202,7 +202,6 @@ Lecture[icon: pencil, color: red] {
   VideoURL string
   LectureFeedback string   // References Form.FormId (feedback form for the lecture)
 }
-
 Assignment[icon: question, color: green] {
   AssignmentId string pk
   TeacherId string         // References Teacher.Id
@@ -211,32 +210,31 @@ Assignment[icon: question, color: green] {
   CreatedAt date
   DueDate date
   Duration number
-  Description string
-  AttachmentUrl string
-  Topics JSON              // Array of topic strings stored as JSON
-  TotalMarks number
-  MarksObtanied? number
-}
-
-Question[icon: question, color: green] {
-  QuestionId string pk
-  AssignmentId string      // References Assignment.AssignmentId
-  Questiontxt string
-  QuestionType enum('MCQ','Subjective')
-  Marks number
-  Duration number
   Topics JSON              // Array of topics stored as JSON
+  Description string
+  Title string
+  AttachmentUrl string?    // Optional supporting file/resource URL
+  TotalMarks number
 }
 
-Option[icon: question, color: red] {
-  OptionId string pk
-  QuestionId string        // References Question.QuestionId
-  OptionText string
-  IsCorrect boolean
+AssignmentQuestionSelection[icon: question, color: blue] {
+  SelectionId string pk
+  AssignmentId string  
+  QuestionId string 
+  CustomMarks number 
 }
+
+AssignmentSubmission[icon: question, color: green] {
+  SubmissionId string pk
+  AssignmentId string  
+  StudentId string 
+  TotalMarksObtained number
+  SubmissionDate date
+}
+
 
 QuesBank[icon: question, color: blue] {
-  QuesBankId string pk
+  QuesId string pk
   Topic string
   DifficultyEnum enum('Easy','Medium','Hard')
   Questiontxt string
@@ -250,7 +248,7 @@ Quiz[icon: question, color: yellow] {
   CreatedAt date
   Duration number
   ModeEnum enum('SelfAssessment','Custom','Manual')
-  Level enum('Easy','Medium','Hard')
+  DiffLevel enum('Easy','Medium','Hard')
   Topics JSON              // Array of topics stored as JSON
   Description string
   Title string
@@ -259,7 +257,7 @@ Quiz[icon: question, color: yellow] {
 QuizQuestionSelection[icon: question, color: blue] {
   SelectionId string pk
   QuizId string            // References Quiz.QuizId
-  QuestionId string        // References QuesBank.QuesBankId
+  QuestionId string        // References QuesBank.QuesId
   CustomMarks number
   MarksObtanied number
 }
@@ -274,12 +272,14 @@ QuizAttempt[icon: question, color: green] {
 
 Notification[icon: message-circle, color: red] {
   NotificationId string pk
-  ClassId string           // References Class.ClassId
+  ClassId string           // References Class.ClassId (optional, if applicable)
   Message string
-  TypeEnum enum('Quiz','DoubtResolution','Other')
+  TypeEnum enum('Quiz','DoubtResolution','Assignment','DailyLogin','Question','General')
   TimeStamp date
   ReadStatus boolean
+  ExtraData JSON?          // Optional additional metadata (e.g., AssignmentId, QuestionId, etc.)
 }
+
 
 Event[icon: activity, color: purple] {
   EventId string pk
@@ -300,7 +300,7 @@ users.SchoolId - School.schoolId
 
 Student.Id - users.id
 PersonalInfo.StudentId - Student.Id
-Attendance.UserId - Student.Id 
+Attendance.UserId - Student.Id
 Attendance.UserId - Teacher.Id
 Activity.StudentId - Student.Id
 
@@ -330,22 +330,19 @@ ParentRatingType.ParentRatingId - ParentRating.FormId
 
 Class.SchoolId - School.schoolId
 Class.classteacher - Teacher.Id
+Class.ClassId - Student.Class_id
 
 Lecture.teacher - Teacher.Id
-Lecture.Subject - ideally Subject.SubjectId
+Lecture.Subject - Subject.SubjectId
 
-Assignment.TeacherId - Teacher.Id
-Assignment.SubjectId - Subject.SubjectId
-Assignment.ClassId - Class.ClassId
-
-Question.AssignmentId - Assignment.AssignmentId
 Option.QuestionId - Question.QuestionId
 
 QuesBank - is the independent question bank repository
+QuesBank.QuesId - used by QuizQuestionSelection.QuestionId
 
 Quiz.CreatorId - users.id
 QuizQuestionSelection.QuizId - Quiz.QuizId
-QuizQuestionSelection.QuestionId - QuesBank.QuesBankId
+QuizQuestionSelection.QuestionId - QuesBank.QuesId
 QuizAttempt.QuizId - Quiz.QuizId
 QuizAttempt.StudentId - Student.Id
 
@@ -353,3 +350,14 @@ Notification.ClassId - Class.ClassId
 
 Event.SchoolId - School.schoolId
 Event.CreatedBy - users.id
+
+Assignment.TeacherId - Teacher.Id
+Assignment.SubjectId - Subject.SubjectId
+Assignment.ClassId   - Class.ClassId
+
+AssignmentQuestionSelection.AssignmentId - Assignment.AssignmentId
+AssignmentQuestionSelection.QuestionId   - QuesBank.QuesId
+
+
+AssignmentSubmission.AssignmentId - Assignment.AssignmentId
+AssignmentSubmission.StudentId  - Student.Id
