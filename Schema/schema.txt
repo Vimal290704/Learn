@@ -27,7 +27,7 @@ School[icon: school, color: green] {
   phone string
   address object
   AcademicYear string
-  Standard array[]    // List of grade levels
+  Standard JSON         // List of grade levels stored as JSON
   Plan object
   status object
   ActiveUser object
@@ -35,9 +35,17 @@ School[icon: school, color: green] {
   timestamp date
 }
 
+Subject[icon: book, color: purple] {
+  SubjectId string pk      // Unique identifier for the subject
+  SchoolId string          // Identifies the school offering the subject
+  Name string              // e.g., Mathematics, Science, English
+  Code string              // e.g., MAT101, SCI102
+  Description string?      // Optional overview
+}
+
 Student[icon: pen-tool, color: orange] {
-  Id string pk
-  Class_id string
+  Id string pk             // References users.id
+  Class_id string          // Identifies the class the student belongs to
   Roll_no number
   PersonalInfo PersonalInfo
   Attendance Attendance
@@ -45,7 +53,7 @@ Student[icon: pen-tool, color: orange] {
 }
 
 PersonalInfo[icon: info, color: purple] {
-  StudentId string pk
+  StudentId string pk      // References Student.Id
   SchoolIdCard object
   ParentsDetail ParentsDetail
   Height string
@@ -54,7 +62,7 @@ PersonalInfo[icon: info, color: purple] {
 }
 
 Attendance[icon: pencil, color: red] {
-  UserId string pk    // Represents Student.Id or Teacher.Id
+  UserId string pk         // Represents Student.Id or Teacher.Id
   Daily boolean
   Weekly number
   Monthly number
@@ -62,71 +70,71 @@ Attendance[icon: pencil, color: red] {
 }
 
 Activity[icon: activity, color: yellow] {
-  StudentId string pk
+  StudentId string pk      // References Student.Id
   QuizStatus boolean
   Points boolean
   Streak number
 }
 
 Teacher[icon: worker, color: gray] {
-  Id string pk
+  Id string pk             // References users.id
   JoiningDate date
-  EmploymentType enum('Fulltime', 'Parttime', 'Contract')
+  EmploymentType enum('Fulltime','Parttime','Contract')
   ExperienceYear number
   IsActive boolean
-  Subjects string[]         // List of subject codes or names
-  GradesAssigned string[]   // List of grades assigned
+  Subjects JSON            // Array of subject codes/names stored as JSON
+  GradesAssigned JSON      // Array of grade levels stored as JSON
   IsClassteacher boolean
-  AssignedClassesID string | null   // Class ID if applicable
+  AssignedClassesID string | null   // Identifies the designated class, if any
   Attendance Attendance
   WeeklySchedule object
   TeacherPerformance TeacherPerformance
 }
 
 TeacherPerformance[icon: gcp-performance-dashboard, color: green] {
-  TeacherId string pk
+  TeacherId string pk      // References Teacher.Id
   StudentPassed number
   ClassAvgScore number
   ParentsFeedback Feedback
-  Achievements Achievements[]
+  Achievements JSON        // Array of achievement details stored as JSON
 }
 
 Achievements[icon: award, color: blue] {
-  TeacherId string pk
+  TeacherId string          // References Teacher.Id
   Title string
   AchievementDate date
   Description string
 }
 
 Feedback[icon: message-circle, color: red] {
-  TeacherId string pk
+  TeacherId string pk      // References Teacher.Id
   AvgRating number
-  Feedbacks feedback[]    // List of feedback objects
+  Feedbacks JSON           // Array of feedback objects stored as JSON
 }
 
 Form[icon: form, color: orange] {
   FormId string pk
-  FormType enum('Lecture Feedback', 'Student Feedback', 'Parent Feedback')
-  FilledBy enum('Student', 'Teacher', 'Parent')
-  StudentId string
-  TeacherId string
+  FormType enum('Lecture Feedback','Student Feedback','Parent Feedback')
+  FilledBy enum('Student','Teacher','Parent')
+  StudentId string         // References Student.Id
+  TeacherId string         // References Teacher.Id
   SubmissionDate date
 }
 
 LectFeedbackForm[icon: message-square, color: blue] {
-  FormId string
+  FormId string           // References Form.FormId
   LectureId string
   Rating LectRating
 }
 
 LectRating[icon: message-circle, color: yellow] {
-  FormId string pk
-  AverageRating LectRatingType
-  RatingByStudent LectRatingType[]
+  FormId string pk        // References LectFeedbackForm.FormId
+  AverageRating JSON       // Detailed ratings stored as JSON
+  RatingByStudent JSON     // Array of student ratings stored as JSON
 }
 
 LectRatingType[icon: message-circle, color: red] {
-  LectRatingId string pk
+  LectRatingId string pk    // References LectRating.FormId
   ContentClarity number
   EngagementLevel number
   LecturePace number
@@ -135,18 +143,18 @@ LectRatingType[icon: message-circle, color: red] {
 }
 
 StudentForm[icon: form, color: green] {
-  FormId string
+  FormId string           // References Form.FormId
   Rating StudRating
 }
 
 StudRating[icon: messenger, color: red] {
-  FormId string pk
-  AverageRating StudRatingtype
-  RatingByStudent StudRatingtype[]
+  FormId string pk        // References StudentForm.FormId
+  AverageRating JSON       // Ratings stored as JSON
+  RatingByStudent JSON     // Array of rating details stored as JSON
 }
 
 StudRatingtype[icon: message-circle, color: purple] {
-  StudRatingId string pk
+  StudRatingId string pk    // References StudRating.FormId
   CommunicationSkills number
   Approachability number
   TeachingEffectiveness number
@@ -154,18 +162,18 @@ StudRatingtype[icon: message-circle, color: purple] {
 }
 
 ParentsForm[icon: message-circle, color: red] {
-  FormId string
+  FormId string           // References Form.FormId
   Rating ParentRating
 }
 
 ParentRating[icon: messenger, color: blue] {
-  FormId string pk
-  AverageRating ParentRatingType
-  ParentRating ParentRatingType[]
+  FormId string pk        // References ParentsForm.FormId
+  AverageRating JSON       // Ratings stored as JSON
+  ParentRating JSON        // Array of detailed ratings stored as JSON
 }
 
 ParentRatingType[icon: message-circle, color: purple] {
-  ParentRatingId string pk
+  ParentRatingId string pk  // References ParentRating.FormId
   ChildImprovement number
   TeachersGuidance number
   CommunicationParents number
@@ -174,51 +182,174 @@ ParentRatingType[icon: message-circle, color: purple] {
   comments? string
 }
 
-users.AvtarId  - Avtar.AvtarId
-users.SchoolId           - School.schoolId
+Class[icon: office, color: blue] {
+  ClassId string pk
+  SchoolId string          // Identifies the school
+  Standard number
+  Section string?          // Optional (e.g., "A", "B")
+  classteacher string      // Identifies the class teacher (Teacher.Id)
+  SubTeachers JSON         // Array of Teacher IDs stored as JSON
+  Subjects JSON            // Array of Subject IDs stored as JSON
+}
 
-Student.Id               - users.id
-Student.PersonalInfo     - PersonalInfo.StudentId
-Student.Attendance       - Attendance.UserId     // Maps Student attendance via Student.Id
-Student.ActivityTracker  - Activity.StudentId
+Lecture[icon: pencil, color: red] {
+  LectureId string pk
+  teacher string           // References Teacher.Id
+  Subject string           // Ideally references Subject.SubjectId
+  LectureTitle string
+  Duration number          // In minutes
+  Description string
+  VideoURL string
+  LectureFeedback string   // References Form.FormId (feedback form for the lecture)
+}
 
-PersonalInfo.StudentId   - Student.Id
-Activity.StudentId       - Student.Id
+Assignment[icon: question, color: green] {
+  AssignmentId string pk
+  TeacherId string         // References Teacher.Id
+  SubjectId string         // References Subject.SubjectId
+  ClassId string           // References Class.ClassId
+  CreatedAt date
+  DueDate date
+  Duration number
+  Description string
+  AttachmentUrl string
+  Topics JSON              // Array of topic strings stored as JSON
+  TotalMarks number
+  MarksObtanied? number
+}
 
-Teacher.Id               - users.id
-Teacher.Attendance       - Attendance.UserId     // Maps Teacher attendance via Teacher.Id
+Question[icon: question, color: green] {
+  QuestionId string pk
+  AssignmentId string      // References Assignment.AssignmentId
+  Questiontxt string
+  QuestionType enum('MCQ','Subjective')
+  Marks number
+  Duration number
+  Topics JSON              // Array of topics stored as JSON
+}
+
+Option[icon: question, color: red] {
+  OptionId string pk
+  QuestionId string        // References Question.QuestionId
+  OptionText string
+  IsCorrect boolean
+}
+
+QuesBank[icon: question, color: blue] {
+  QuesBankId string pk
+  Topic string
+  DifficultyEnum enum('Easy','Medium','Hard')
+  Questiontxt string
+  QuestionEnum enum('MCQ','Subjective')
+  Marks number
+}
+
+Quiz[icon: question, color: yellow] {
+  QuizId string pk
+  CreatorId string         // References users.id (Teacher or Student)
+  CreatedAt date
+  Duration number
+  ModeEnum enum('SelfAssessment','Custom','Manual')
+  Level enum('Easy','Medium','Hard')
+  Topics JSON              // Array of topics stored as JSON
+  Description string
+  Title string
+}
+
+QuizQuestionSelection[icon: question, color: blue] {
+  SelectionId string pk
+  QuizId string            // References Quiz.QuizId
+  QuestionId string        // References QuesBank.QuesBankId
+  CustomMarks number
+  MarksObtanied number
+}
+
+QuizAttempt[icon: question, color: green] {
+  AttemptId string pk
+  QuizId string            // References Quiz.QuizId
+  StudentId string         // References Student.Id
+  MarksObtained number
+  AttemptDate date
+}
+
+Notification[icon: message-circle, color: red] {
+  NotificationId string pk
+  ClassId string           // References Class.ClassId
+  Message string
+  TypeEnum enum('Quiz','DoubtResolution','Other')
+  TimeStamp date
+  ReadStatus boolean
+}
+
+Event[icon: activity, color: purple] {
+  EventId string pk
+  SchoolId string          // References School.schoolId
+  Title string
+  Description string
+  StartDate date
+  EndDate date
+  Location string
+  EventType string
+  CreatedBy string         // References users.id
+  CreatedAt date
+  Poster url
+}
+
+users.AvtarId - Avtar.AvtarId
+users.SchoolId - School.schoolId
+
+Student.Id - users.id
+PersonalInfo.StudentId - Student.Id
+Attendance.UserId - Student.Id 
+Attendance.UserId - Teacher.Id
+Activity.StudentId - Student.Id
+
+Teacher.Id - users.id
+Teacher.AssignedClassesID - Class.ClassId
+Teacher.Attendance - Attendance.UserId
 Teacher.TeacherPerformance - TeacherPerformance.TeacherId
 
-TeacherPerformance.TeacherId      - Teacher.Id
-TeacherPerformance.ParentsFeedback - Feedback.TeacherId
-TeacherPerformance.Achievements    - Achievements.TeacherId
+TeacherPerformance.TeacherId - Teacher.Id
+Achievements.TeacherId - Teacher.Id
+Feedback.TeacherId - Teacher.Id
 
-Achievements.TeacherId   - Teacher.Id
-Feedback.TeacherId       - Teacher.Id
+Form.StudentId - Student.Id
+Form.TeacherId - Teacher.Id
 
-Form.StudentId           - Student.Id
-Form.TeacherId           - Teacher.Id
-
-LectFeedbackForm.FormId  - Form.FormId
-LectFeedbackForm.Rating  - LectRating.FormId
-
-LectRating.FormId        - LectFeedbackForm.FormId
-LectRating.RatingByStudent - LectRatingType.LectRatingId
-
+LectFeedbackForm.FormId - Form.FormId
+LectRating.FormId - LectFeedbackForm.FormId
 LectRatingType.LectRatingId - LectRating.FormId
 
-StudentForm.FormId       - Form.FormId
-StudentForm.Rating       - StudRating.FormId
-
-StudRating.FormId        - StudentForm.FormId
-StudRating.RatingByStudent - StudRatingtype.StudRatingId
-
+StudentForm.FormId - Form.FormId
+StudRating.FormId - StudentForm.FormId
 StudRatingtype.StudRatingId - StudRating.FormId
 
-ParentsForm.FormId       - Form.FormId
-ParentsForm.Rating       - ParentRating.FormId
-
-ParentRating.FormId      - ParentsForm.FormId
-ParentRating.ParentRating - ParentRatingType.ParentRatingId
-
+ParentsForm.FormId - Form.FormId
+ParentRating.FormId - ParentsForm.FormId
 ParentRatingType.ParentRatingId - ParentRating.FormId
+
+Class.SchoolId - School.schoolId
+Class.classteacher - Teacher.Id
+
+Lecture.teacher - Teacher.Id
+Lecture.Subject - ideally Subject.SubjectId
+
+Assignment.TeacherId - Teacher.Id
+Assignment.SubjectId - Subject.SubjectId
+Assignment.ClassId - Class.ClassId
+
+Question.AssignmentId - Assignment.AssignmentId
+Option.QuestionId - Question.QuestionId
+
+QuesBank - is the independent question bank repository
+
+Quiz.CreatorId - users.id
+QuizQuestionSelection.QuizId - Quiz.QuizId
+QuizQuestionSelection.QuestionId - QuesBank.QuesBankId
+QuizAttempt.QuizId - Quiz.QuizId
+QuizAttempt.StudentId - Student.Id
+
+Notification.ClassId - Class.ClassId
+
+Event.SchoolId - School.schoolId
+Event.CreatedBy - users.id
