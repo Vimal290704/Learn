@@ -1,0 +1,211 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Drona LMS External Connections" id="drona_lms">
+    <mxGraphModel dx="1104" dy="633" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        
+        <!-- Group 1: Users, Avtar & School -->
+        <mxCell id="group1" value="Users, Avtar &amp; School" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="20" y="20" width="200" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="users" value="users" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group1">
+          <mxGeometry x="10" y="20" width="60" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="Avtar" value="Avtar" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group1">
+          <mxGeometry x="80" y="20" width="60" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="School" value="School" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group1">
+          <mxGeometry x="150" y="20" width="60" height="30" as="geometry"/>
+        </mxCell>
+        <!-- Edges for Group 1 -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" source="users" target="Avtar" parent="group1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="70" y="35"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" source="users" target="School" parent="group1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="110" y="35"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Group 2: Student Module -->
+        <mxCell id="group2" value="Student Module" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="20" y="160" width="200" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="Student" value="Student" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group2">
+          <mxGeometry x="10" y="20" width="60" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="PersonalInfo" value="PersonalInfo" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group2">
+          <mxGeometry x="80" y="20" width="80" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="Attendance_student" value="Attendance" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group2">
+          <mxGeometry x="10" y="70" width="80" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="Activity" value="Activity" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group2">
+          <mxGeometry x="100" y="70" width="80" height="30" as="geometry"/>
+        </mxCell>
+        <!-- Edge: Student.Id - users.id -->
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" source="Student" target="users" parent="group2">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- Edge: PersonalInfo.StudentId - Student.Id -->
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" source="PersonalInfo" target="Student" parent="group2">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        
+        <!-- Group 3: Teacher Module -->
+        <mxCell id="group3" value="Teacher Module" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="260" y="20" width="200" height="160" as="geometry"/>
+        </mxCell>
+        <mxCell id="Teacher" value="Teacher" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group3">
+          <mxGeometry x="10" y="20" width="60" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="TeacherPerformance" value="TeacherPerformance" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group3">
+          <mxGeometry x="80" y="20" width="100" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="Achievements" value="Achievements" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group3">
+          <mxGeometry x="10" y="70" width="80" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="Feedback" value="Feedback" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group3">
+          <mxGeometry x="100" y="70" width="80" height="30" as="geometry"/>
+        </mxCell>
+        <!-- Edge: Teacher.Id - users.id -->
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" source="Teacher" target="users" parent="group3">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        
+        <!-- Group 4: Forms & Feedback -->
+        <mxCell id="group4" value="Forms &amp; Feedback" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="260" y="200" width="200" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="Form" value="Form" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group4">
+          <mxGeometry x="10" y="20" width="60" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="LectFeedbackForm" value="LectFeedbackForm" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group4">
+          <mxGeometry x="80" y="20" width="100" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="LectRating" value="LectRating" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group4">
+          <mxGeometry x="10" y="70" width="80" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="LectRatingType" value="LectRatingType" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group4">
+          <mxGeometry x="100" y="70" width="100" height="30" as="geometry"/>
+        </mxCell>
+        <!-- Edges for Group 4 -->
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" source="LectFeedbackForm" target="Form" parent="group4"/>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" source="LectRating" target="LectFeedbackForm" parent="group4"/>
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" source="LectRatingType" target="LectRating" parent="group4"/>
+        
+        <!-- Group 5: Class & Lecture -->
+        <mxCell id="group5" value="Class &amp; Lecture" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="20" y="340" width="200" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="Class" value="Class" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group5">
+          <mxGeometry x="10" y="20" width="60" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="Lecture" value="Lecture" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group5">
+          <mxGeometry x="80" y="20" width="60" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="Subject" value="Subject" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group5">
+          <mxGeometry x="150" y="20" width="60" height="30" as="geometry"/>
+        </mxCell>
+        <!-- Edge: Lecture.teacher - Teacher.Id -->
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" source="Lecture" target="Teacher" parent="group5">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- Edge: Lecture.Subject - Subject.SubjectId -->
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" source="Lecture" target="Subject" parent="group5">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        
+        <!-- Group 6: Assignments, Quizzes & QuesBank -->
+        <mxCell id="group6" value="Assignments, Quizzes &amp; QuesBank" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="260" y="380" width="300" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="Assignment" value="Assignment" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group6">
+          <mxGeometry x="10" y="20" width="80" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="AssignmentQuestionSelection" value="AssignmentQuestionSelection" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group6">
+          <mxGeometry x="100" y="20" width="120" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="AssignmentSubmission" value="AssignmentSubmission" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group6">
+          <mxGeometry x="240" y="20" width="120" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="QuesBank" value="QuesBank" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group6">
+          <mxGeometry x="10" y="80" width="80" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="Quiz" value="Quiz" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group6">
+          <mxGeometry x="100" y="80" width="60" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="QuizQuestionSelection" value="QuizQuestionSelection" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group6">
+          <mxGeometry x="170" y="80" width="120" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="QuizAttempt" value="QuizAttempt" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group6">
+          <mxGeometry x="300" y="80" width="80" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="Option" value="Option" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group6">
+          <mxGeometry x="170" y="140" width="60" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="Question" value="Question" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group6">
+          <mxGeometry x="240" y="140" width="80" height="30" as="geometry"/>
+        </mxCell>
+        <!-- Edge: AssignmentQuestionSelection.AssignmentId - Assignment.AssignmentId -->
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" source="AssignmentQuestionSelection" target="Assignment" parent="group6">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- Edge: AssignmentSubmission.AssignmentId - Assignment.AssignmentId -->
+        <mxCell id="e13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" source="AssignmentSubmission" target="Assignment" parent="group6">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- Edge: AssignmentQuestionSelection.QuestionId - QuesBank.QuesId -->
+        <mxCell id="e14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" source="AssignmentQuestionSelection" target="QuesBank" parent="group6">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- Edge: QuizQuestionSelection.QuizId - Quiz.QuizId -->
+        <mxCell id="e15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" source="QuizQuestionSelection" target="Quiz" parent="group6">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- Edge: QuizQuestionSelection.QuestionId - QuesBank.QuesId -->
+        <mxCell id="e16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" source="QuizQuestionSelection" target="QuesBank" parent="group6">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- Edge: QuizAttempt.QuizId - Quiz.QuizId -->
+        <mxCell id="e17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" source="QuizAttempt" target="Quiz" parent="group6">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- Edge: QuizAttempt.StudentId - Student.Id -->
+        <mxCell id="e18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" source="QuizAttempt" target="Student" parent="group6">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- Edge: Option.QuestionId - Question.QuestionId -->
+        <mxCell id="e19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" source="Option" target="Question" parent="group6">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        
+        <!-- Group 7: Notifications & Events -->
+        <mxCell id="group7" value="Notifications &amp; Events" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="260" y="600" width="200" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="Notification" value="Notification" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group7">
+          <mxGeometry x="10" y="20" width="100" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="Event" value="Event" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="group7">
+          <mxGeometry x="120" y="20" width="100" height="30" as="geometry"/>
+        </mxCell>
+        <!-- Edge: Notification.ClassId - Class.ClassId -->
+        <mxCell id="e20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" source="Notification" target="Class" parent="group7">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- Edge: Event.SchoolId - School.schoolId -->
+        <mxCell id="e21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" source="Event" target="School" parent="group7">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- Edge: Event.CreatedBy - users.id -->
+        <mxCell id="e22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" source="Event" target="users" parent="group7">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
